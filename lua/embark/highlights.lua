@@ -1,0 +1,342 @@
+-- Embark highlight groups
+local M = {}
+
+function M.setup(c, config)
+  local transparent = config.transparent_background
+  local italics = config.terminal_italics
+
+  -- Helper function for italic styling
+  local function maybe_italic(style)
+    if not italics then
+      return style
+    end
+    if not style or style == "" then
+      return "italic"
+    end
+    return style .. ",italic"
+  end
+
+  local highlights = {
+    -- UI CHROME
+    ColorColumn = { bg = c.space2 },
+    Conceal = { fg = c.astral1 },
+    Cursor = { bg = c.blue, fg = c.space4 },
+    CursorColumn = { bg = transparent and c.none or c.space0 },
+    CursorLine = { bg = transparent and c.none or c.space0 },
+    Directory = { fg = c.purple },
+    DiffAdd = { bg = c.diff_add },
+    DiffChange = { bg = c.diff_changed },
+    DiffDelete = { fg = c.space3, bg = c.diff_del },
+    DiffText = { bg = c.diff_changed, underline = true, sp = c.dark_blue },
+    ErrorMsg = { fg = c.dark_red },
+    WinSeparator = { fg = c.space3 },
+    Folded = { fg = c.purple, bg = c.space2 },
+    FoldColumn = { fg = c.dark_purple },
+    SignColumn = { fg = c.green, bg = transparent and c.none or c.space1 },
+    IncSearch = { bg = c.yellow, fg = c.space1 },
+    LineNr = { fg = c.space4, bg = transparent and c.none or c.space1 },
+    CursorLineNr = { bg = transparent and c.none or c.space0, fg = c.blue, bold = true },
+    MatchParen = { bg = c.space0, fg = c.purple, bold = true },
+    ModeMsg = { fg = c.astral0, bold = true },
+    MoreMsg = { link = "ModeMsg" },
+    NonText = { fg = c.space4 },
+    Normal = { bg = transparent and c.none or c.space1, fg = c.astral1 },
+    NormalFloat = { bg = c.space2, fg = c.astral1 },
+    Pmenu = { fg = c.astral1, bg = c.space2 },
+    PmenuSel = { fg = c.purple, bg = c.space1 },
+    PmenuSbar = { fg = c.astral1, bg = c.space0 },
+    PmenuThumb = { fg = c.astral1, bg = c.space0 },
+    Question = { fg = c.green },
+    Search = { bg = c.dark_yellow, fg = c.space1 },
+    SpecialKey = { fg = c.blue },
+    SpellBad = { undercurl = true, sp = c.dark_red },
+    SpellCap = { undercurl = true, sp = c.green },
+    SpellLocal = { undercurl = true, sp = c.dark_green },
+    SpellRare = { undercurl = true, sp = c.red },
+    StatusLine = { bg = transparent and c.none or c.space1, fg = c.astral1 },
+    StatusLineNC = { bg = transparent and c.none or c.space1 },
+    TabLine = { fg = c.astral0, bg = transparent and c.none or c.space1 },
+    TabLineFill = { fg = c.astral0, bg = transparent and c.none or c.space1 },
+    TabLineSel = { fg = c.astral1, bg = c.space3, bold = true },
+    Title = { fg = c.dark_blue },
+    Visual = { bg = c.space3 },
+    WarningMsg = { fg = c.yellow },
+    WildMenu = { fg = c.space0, bg = c.cyan },
+
+    -- SYNTAX HIGHLIGHTING
+    Comment = { fg = c.astral0, italic = italics },
+    Constant = { fg = c.purple },
+    String = { fg = c.yellow },
+    Number = { fg = c.dark_yellow },
+    Boolean = { fg = c.dark_yellow },
+    Float = { fg = c.dark_yellow },
+    Identifier = { fg = c.astral1 },
+    Function = { fg = c.red },
+    Statement = { fg = c.green },
+    Label = { fg = c.dark_blue },
+    Operator = { fg = c.dark_cyan },
+    Keyword = { fg = c.green },
+    PreProc = { fg = c.green },
+    Type = { fg = c.purple },
+    Special = { fg = c.cyan },
+    Underlined = { fg = c.astral1, underline = true },
+    Ignore = { fg = c.space1 },
+    Error = { fg = c.dark_red, bg = c.space0, bold = true },
+    Todo = { fg = c.dark_yellow, bg = transparent and c.none or c.space1, bold = true },
+
+    -- LSP / DIAGNOSTICS
+    DiagnosticError = { fg = c.red },
+    DiagnosticWarn = { fg = c.yellow },
+    DiagnosticInfo = { fg = c.blue },
+    DiagnosticHint = { fg = c.purple },
+    DiagnosticVirtualTextError = { fg = c.red, bg = transparent and c.none or c.space0 },
+    DiagnosticVirtualTextWarn = { fg = c.yellow, bg = transparent and c.none or c.space0 },
+    DiagnosticVirtualTextInfo = { fg = c.blue, bg = transparent and c.none or c.space0 },
+    DiagnosticVirtualTextHint = { fg = c.purple, bg = transparent and c.none or c.space0 },
+    DiagnosticUnderlineError = { undercurl = true, sp = c.red },
+    DiagnosticUnderlineWarn = { undercurl = true, sp = c.yellow },
+    DiagnosticUnderlineInfo = { undercurl = true, sp = c.blue },
+    DiagnosticUnderlineHint = { undercurl = true, sp = c.purple },
+    DiagnosticSignError = { fg = c.red },
+    DiagnosticSignWarn = { fg = c.yellow },
+    DiagnosticSignInfo = { fg = c.blue },
+    DiagnosticSignHint = { fg = c.purple },
+    DiagnosticFloatingError = { link = "DiagnosticSignError" },
+    DiagnosticFloatingWarn = { link = "DiagnosticSignWarn" },
+    DiagnosticFloatingInfo = { link = "DiagnosticSignInfo" },
+    DiagnosticFloatingHint = { link = "DiagnosticSignHint" },
+
+    -- LSP SEMANTIC TOKENS
+    ["@lsp.type.class"] = { link = "Type" },
+    ["@lsp.type.decorator"] = { link = "Function" },
+    ["@lsp.type.enum"] = { link = "Type" },
+    ["@lsp.type.enumMember"] = { link = "Constant" },
+    ["@lsp.type.function"] = { link = "Function" },
+    ["@lsp.type.interface"] = { link = "Type" },
+    ["@lsp.type.macro"] = { link = "Macro" },
+    ["@lsp.type.method"] = { link = "Function" },
+    ["@lsp.type.namespace"] = { link = "Type" },
+    ["@lsp.type.parameter"] = { link = "Identifier" },
+    ["@lsp.type.property"] = { link = "Identifier" },
+    ["@lsp.type.struct"] = { link = "Type" },
+    ["@lsp.type.type"] = { link = "Type" },
+    ["@lsp.type.typeParameter"] = { link = "Type" },
+    ["@lsp.type.variable"] = { link = "Identifier" },
+
+    -- TREESITTER
+    ["@keyword.operator"] = { fg = c.cyan },
+    ["@constant.builtin"] = { link = "Special" },
+    ["@punctuation.bracket"] = { fg = c.cyan },
+    ["@variable.builtin"] = { fg = c.cyan },
+    ["@string.special"] = { fg = c.dark_blue },
+    ["@string.escape"] = { fg = c.cyan },
+    ["@string.special.symbol"] = { fg = c.yellow },
+    ["@module"] = { fg = c.purple },
+    ["@function"] = { fg = c.red },
+    ["@function.call"] = { fg = c.blue },
+    ["@constructor"] = { fg = c.purple },
+    ["@markup.heading"] = { link = "Title" },
+    ["@markup.raw"] = { fg = c.cyan },
+    ["@markup.link.url"] = { fg = c.blue },
+    ["@markup.link"] = { fg = c.purple },
+    ["@markup.strong"] = { bold = true },
+    ["@markup.emphasis"] = { italic = italics },
+    ["@markup.list.unchecked"] = { fg = c.dark_cyan, bold = true },
+    ["@markup.list.checked"] = { fg = c.astral0 },
+    ["@tag"] = { link = "Keyword" },
+    ["@tag.delimiter"] = { link = "Special" },
+    ["@tag.attribute"] = { link = "Constant" },
+
+    -- GIT SIGNS
+    GitSignsAdd = { fg = c.green, bg = transparent and c.none or c.space1 },
+    GitSignsChange = { fg = c.yellow, bg = transparent and c.none or c.space1 },
+    GitSignsDelete = { fg = c.red, bg = transparent and c.none or c.space1 },
+    GitGutterAdd = { link = "GitSignsAdd" },
+    GitGutterChange = { link = "GitSignsChange" },
+    GitGutterDelete = { link = "GitSignsDelete" },
+
+    -- TELESCOPE
+    TelescopeNormal = { fg = c.astral0 },
+    TelescopeBorder = { link = "LineNr" },
+    TelescopeSelectionCaret = { bg = c.space3, fg = c.green },
+    TelescopeSelection = { bg = c.space3, fg = c.astral1 },
+    TelescopeMatching = { link = "String" },
+    TelescopePreviewTitle = { fg = c.space0, bg = c.purple },
+    TelescopePromptTitle = { fg = c.space0, bg = c.green },
+    TelescopePromptNormal = { link = "Normal" },
+    TelescopeResultsTitle = { fg = c.space0, bg = c.blue },
+    TelescopePromptPrefix = { link = "Type" },
+
+    -- NVIM-TREE
+    NvimTreeFolderIcon = { fg = c.purple },
+    NvimTreeFolderName = { fg = c.blue },
+    NvimTreeRootFolder = { fg = c.green },
+
+    -- NEO-TREE
+    NeoTreeGitUntracked = { fg = c.astral0, bold = italics, italic = italics },
+    NeoTreeGitUnstaged = { fg = c.dark_cyan },
+
+    -- NVIM-CMP
+    CmpItemMenu = { link = "Comment" },
+    CmpItemKindDefault = { fg = c.purple },
+    CmpItemAbbrMatch = { link = "Pmenu" },
+    CmpItemKindFunction = { link = "Function" },
+    CmpItemKindMethod = { link = "CmpItemKindFunction" },
+    CmpItemKindModule = { link = "PreProc" },
+    CmpItemKindStruct = { link = "CmpItemKindModule" },
+    CmpItemKindText = { link = "Comment" },
+    CmpItemKindSnippet = { link = "Constant" },
+    CmpItemKindReference = { link = "CmpItemKindDefault" },
+    CmpItemKindInterface = { link = "CmpItemKindDefault" },
+
+    -- LEAP / FLASH
+    LeapLabelPrimary = { fg = c.space0, bg = c.dark_cyan, bold = true },
+    LeapLabelSecondary = { fg = c.space0, bg = c.purple },
+    FlashLabel = { link = "LeapLabelPrimary" },
+
+    -- WHICH-KEY
+    WhichKey = { fg = c.blue },
+    WhichKeyDesc = { fg = c.astral1 },
+    WhichKeyGroup = { fg = c.purple },
+
+    -- NOTIFY
+    NotifyERRORBorder = { fg = c.red },
+    NotifyERRORTitle = { link = "NotifyERRORBorder" },
+    NotifyERRORIcon = { link = "NotifyERRORBorder" },
+    NotifyWARNBorder = { fg = c.yellow },
+    NotifyWARNTitle = { link = "NotifyWARNBorder" },
+    NotifyWARNIcon = { link = "NotifyWARNTitle" },
+    NotifyINFOBorder = { fg = c.green },
+    NotifyINFOTitle = { link = "NotifyINFOBorder" },
+    NotifyINFOIcon = { link = "NotifyINFOBorder" },
+    NotifyDEBUGBorder = { fg = c.blue },
+    NotifyDEBUGTitle = { link = "NotifyDEBUGBorder" },
+    NotifyDEBUGIcon = { link = "NotifyDEBUGBorder" },
+    NotifyTRACEBorder = { fg = c.purple },
+    NotifyTRACETitle = { link = "NotifyTRACEBorder" },
+    NotifyTRACEIcon = { link = "NotifyTRACEBorder" },
+
+    -- RENDER MARKDOWN
+    RenderMarkdownH1Bg = { fg = c.dark_purple, underline = true, bold = true },
+    RenderMarkdownH2Bg = { fg = c.dark_blue, underline = true, bold = true },
+    RenderMarkdownH3Bg = { fg = c.dark_cyan, underline = true, bold = true },
+    RenderMarkdownH4Bg = { fg = c.green, underline = true, bold = true },
+    RenderMarkdownH5Bg = { fg = c.yellow, underline = true, bold = true },
+    RenderMarkdownH6Bg = { fg = c.yellow, underline = true, bold = true },
+
+    -- HTML
+    htmlTag = { link = "Special" },
+    htmlEndTag = { link = "htmlTag" },
+    htmlTagName = { link = "Keyword" },
+    htmlTagN = { link = "Keyword" },
+    htmlH1 = { fg = c.dark_blue, bold = true, italic = italics },
+    htmlH2 = { fg = c.dark_blue, bold = true },
+    htmlH3 = { fg = c.blue, italic = italics },
+    htmlH4 = { fg = c.blue, italic = italics },
+    htmlH5 = { fg = c.dark_cyan },
+    htmlH6 = { fg = c.dark_cyan },
+    htmlLink = { fg = c.blue, underline = true },
+    htmlItalic = { italic = italics },
+    htmlBold = { bold = true },
+    htmlBoldItalic = { bold = true, italic = italics },
+
+    -- MARKDOWN
+    markdownBlockquote = { fg = c.astral1 },
+    markdownBold = { fg = c.astral1, bold = true },
+    markdownBoldItalic = { fg = c.astral1, bold = true, italic = italics },
+    markdownH1 = { fg = c.dark_blue, bold = true, italic = italics },
+    markdownH2 = { fg = c.dark_blue, bold = true },
+    markdownH3 = { fg = c.dark_blue, italic = italics },
+    markdownH4 = { fg = c.dark_blue, italic = italics },
+    markdownH5 = { fg = c.dark_blue },
+    markdownH6 = { fg = c.dark_blue },
+    markdownHeadingDelimiter = { fg = c.astral1 },
+    markdownLinkText = { fg = c.astral1 },
+    markdownUrl = { fg = c.astral0, underline = true },
+    markdownCode = { fg = c.astral1 },
+
+    -- FUGITIVE
+    diffAdded = { fg = c.green },
+    diffRemoved = { fg = c.red },
+    diffFile = { fg = c.purple },
+    diffIndexLine = { fg = c.purple },
+    diffOldFile = { fg = c.blue },
+    diffNewFile = { fg = c.blue },
+    diffLine = { fg = c.purple },
+
+    -- ALE
+    ALEErrorSign = { fg = c.red, bg = transparent and c.none or c.space1 },
+    ALEWarningSign = { fg = c.dark_yellow, bg = transparent and c.none or c.space1 },
+    ALEVirtualTextWarning = { fg = c.dark_yellow },
+
+    -- SNACKS.NVIM
+    -- Base window styling
+    SnacksNormal = { bg = transparent and c.none or c.space1, fg = c.astral1 },
+    SnacksNormalNC = { bg = transparent and c.none or c.space1, fg = c.astral0 },
+    SnacksWinBar = { bg = transparent and c.none or c.space1, fg = c.purple, bold = true },
+    SnacksWinBarNC = { bg = transparent and c.none or c.space1, fg = c.astral0 },
+    SnacksBackdrop = { bg = c.space0 },
+
+    -- Notifier (Notifications)
+    SnacksNotifierInfo = { bg = transparent and c.none or c.space2, fg = c.astral1 },
+    SnacksNotifierWarn = { bg = transparent and c.none or c.space2, fg = c.astral1 },
+    SnacksNotifierDebug = { bg = transparent and c.none or c.space2, fg = c.astral1 },
+    SnacksNotifierError = { bg = transparent and c.none or c.space2, fg = c.astral1 },
+    SnacksNotifierTrace = { bg = transparent and c.none or c.space2, fg = c.astral1 },
+    SnacksNotifierIconInfo = { fg = c.blue },
+    SnacksNotifierIconWarn = { fg = c.yellow },
+    SnacksNotifierIconDebug = { fg = c.astral0 },
+    SnacksNotifierIconError = { fg = c.red },
+    SnacksNotifierIconTrace = { fg = c.purple },
+    SnacksNotifierTitleInfo = { fg = c.blue, italic = italics },
+    SnacksNotifierTitleWarn = { fg = c.yellow, italic = italics },
+    SnacksNotifierTitleDebug = { fg = c.astral0, italic = italics },
+    SnacksNotifierTitleError = { fg = c.red, italic = italics },
+    SnacksNotifierTitleTrace = { fg = c.purple, italic = italics },
+    SnacksNotifierBorderInfo = { fg = c.blue },
+    SnacksNotifierBorderWarn = { fg = c.yellow },
+    SnacksNotifierBorderDebug = { fg = c.astral0 },
+    SnacksNotifierBorderError = { fg = c.red },
+    SnacksNotifierBorderTrace = { fg = c.purple },
+    SnacksNotifierFooterInfo = { fg = c.blue },
+    SnacksNotifierFooterWarn = { fg = c.yellow },
+    SnacksNotifierFooterDebug = { fg = c.astral0 },
+    SnacksNotifierFooterError = { fg = c.red },
+    SnacksNotifierFooterTrace = { fg = c.purple },
+
+    -- Dashboard
+    SnacksDashboardNormal = { bg = transparent and c.none or c.space1, fg = c.astral1 },
+    SnacksDashboardDesc = { fg = c.astral0 },
+    SnacksDashboardFile = { fg = c.blue },
+    SnacksDashboardDir = { fg = c.purple },
+    SnacksDashboardFooter = { fg = c.dark_cyan, italic = italics },
+    SnacksDashboardHeader = { fg = c.dark_purple },
+    SnacksDashboardIcon = { fg = c.purple },
+    SnacksDashboardKey = { fg = c.yellow },
+    SnacksDashboardTerminal = { bg = transparent and c.none or c.space1, fg = c.astral1 },
+    SnacksDashboardSpecial = { fg = c.cyan },
+    SnacksDashboardTitle = { fg = c.green, bold = true },
+
+    -- Indent Guides
+    SnacksIndent = { fg = c.space3 },
+    SnacksIndentScope = { fg = c.purple },
+
+    -- Picker (Fuzzy Finder) - matches editor background
+    SnacksPicker = { bg = transparent and c.none or c.space1, fg = c.astral1 },
+    SnacksPickerSelected = { bg = c.space3, fg = c.purple, bold = true },
+    SnacksPickerMatch = { fg = c.yellow, bold = true },
+    SnacksPickerBorder = { fg = c.space4, bg = transparent and c.none or c.space1 },
+    SnacksPickerInput = { bg = transparent and c.none or c.space1, fg = c.astral1 },
+    SnacksPickerPrompt = { fg = c.green },
+    SnacksPickerTitle = { fg = c.space0, bg = c.blue, bold = true },
+    SnacksPickerPreviewTitle = { fg = c.space0, bg = c.purple, bold = true },
+    SnacksPickerInputTitle = { fg = c.space0, bg = c.green, bold = true },
+    SnacksPickerListTitle = { fg = c.space0, bg = c.blue, bold = true },
+    SnacksPickerDir = { fg = c.purple },
+    SnacksPickerFile = { fg = c.astral1 },
+  }
+
+  return highlights
+end
+
+return M

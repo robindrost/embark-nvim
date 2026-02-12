@@ -1,0 +1,140 @@
+*embark.txt*  A dark Neovim colorscheme with vibrant colors
+
+==============================================================================
+CONTENTS                                                      *embark-contents*
+
+    1. Introduction .................... |embark-introduction|
+    2. Installation .................... |embark-installation|
+    3. Configuration ................... |embark-configuration|
+    4. Commands ........................ |embark-commands|
+    5. Highlights ...................... |embark-highlights|
+    6. Plugin Support .................. |embark-plugin-support|
+    7. License ......................... |embark-license|
+
+==============================================================================
+INTRODUCTION                                              *embark-introduction*
+
+Embark is a dark Neovim colorscheme with vibrant colors, ported from the
+embark-theme/vim project. This version is written in pure Lua and includes
+support for transparent backgrounds.
+
+Features:
+  - Beautiful, vibrant color palette
+  - Transparent background support
+  - Extensive plugin support (Treesitter, LSP, Telescope, Snacks.nvim, etc.)
+  - Written in Lua for performance
+  - Modern Neovim-first approach
+
+==============================================================================
+INSTALLATION                                              *embark-installation*
+
+Using lazy.nvim: >
+    {
+      "yourusername/embark-nvim",
+      lazy = false,
+      priority = 1000,
+      config = function()
+        require("embark").setup()
+        vim.cmd("colorscheme embark")
+      end,
+    }
+<
+
+Using packer.nvim: >
+    use {
+      "yourusername/embark-nvim",
+      config = function()
+        require("embark").setup()
+        vim.cmd("colorscheme embark")
+      end
+    }
+<
+
+==============================================================================
+CONFIGURATION                                            *embark-configuration*
+
+Setup function: >
+    require("embark").setup({
+      transparent_background = false,  -- Enable transparent background
+      terminal_italics = true,         -- Enable italic comments
+      terminal_colors = true,          -- Set terminal colors
+    })
+<
+
+Options:
+
+*embark.transparent_background*
+    Type: boolean
+    Default: false
+    Enable transparent background for the editor and floating windows.
+
+*embark.terminal_italics*
+    Type: boolean
+    Default: true
+    Enable italic styling for comments and emphasis text. Requires a font
+    that supports italics.
+
+*embark.terminal_colors*
+    Type: boolean
+    Default: true
+    Set Neovim's terminal colors to match the theme.
+
+==============================================================================
+COMMANDS                                                      *embark-commands*
+
+:colorscheme embark                                         *:colorscheme-embark*
+    Load the Embark colorscheme.
+
+Lua API:
+
+require("embark").setup({opts})                               *embark.setup()*
+    Configure the theme with the given options.
+    See |embark-configuration| for available options.
+
+require("embark").load()                                       *embark.load()*
+    Load or reload the colorscheme with current configuration.
+
+==============================================================================
+HIGHLIGHTS                                                  *embark-highlights*
+
+The theme defines highlights for:
+  - Standard Vim highlight groups
+  - Treesitter (@-prefixed groups)
+  - LSP semantic tokens (@lsp.type.*)
+  - Diagnostics (DiagnosticError, DiagnosticWarn, etc.)
+  - Plugin-specific groups (see |embark-plugin-support|)
+
+To inspect highlight groups: >
+    :highlight
+    :Telescope highlights
+<
+
+==============================================================================
+PLUGIN SUPPORT                                          *embark-plugin-support*
+
+Embark includes custom highlighting for:
+
+  - nvim-treesitter         Full semantic highlighting
+  - LSP & Diagnostics       Error, warning, info, hint styling
+  - Telescope               Custom picker colors
+  - snacks.nvim             Dashboard, picker, notifier, indent
+  - nvim-cmp                Completion menu styling
+  - nvim-tree / neo-tree    File explorer highlighting
+  - gitsigns.nvim           Git change indicators
+  - which-key.nvim          Command palette styling
+  - nvim-notify             Notification styling
+  - leap.nvim / flash.nvim  Motion plugin support
+  - And many more!
+
+==============================================================================
+LICENSE                                                        *embark-license*
+
+MIT License
+
+Copyright (c) 2026 Robin Drost
+
+Based on the original Embark theme:
+https://github.com/embark-theme/vim
+
+==============================================================================
+vim:tw=78:ts=8:ft=help:norl:

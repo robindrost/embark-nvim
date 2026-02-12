@@ -1,0 +1,15 @@
+name: Generate Docs
+
+on:
+  push:
+    branches: [main, master]
+
+jobs:
+  docs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Generate help tags
+        run: |
+          # Help tags are generated automatically by Neovim
+          echo "Documentation available in doc/embark.txt"
