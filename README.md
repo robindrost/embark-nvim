@@ -39,7 +39,7 @@ Written in pure Lua for modern Neovim with transparent background support.
 
 ```lua
 {
-  "yourusername/embark-nvim",  -- Replace with your GitHub username
+  "robindrost/embark-nvim",  -- Replace with your GitHub username
   name = "embark",
   lazy = false,
   priority = 1000,
@@ -58,7 +58,7 @@ Written in pure Lua for modern Neovim with transparent background support.
 
 ```lua
 use {
-  "yourusername/embark-nvim",  -- Replace with your GitHub username
+  "robindrost/embark-nvim",  -- Replace with your GitHub username
   as = "embark",
   config = function()
     require("embark").setup({
@@ -74,7 +74,7 @@ use {
 ### Using [vim-plug](https://github.com/junegunn/vim-plug)
 
 ```vim
-Plug 'yourusername/embark-nvim'
+Plug 'robindrost/embark-nvim'
 
 " Then in your init.vim or init.lua:
 lua << EOF
