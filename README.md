@@ -24,6 +24,7 @@ Written in pure Lua for modern Neovim with transparent background support.
   - LSP & Diagnostics
   - Telescope
   - Snacks.nvim (dashboard, picker, notifier, indent guides)
+  - Lualine (statusline)
   - nvim-cmp
   - nvim-tree / neo-tree
   - GitSigns
@@ -170,6 +171,7 @@ This theme includes custom highlighting for:
 - **LSP**: Diagnostics, signs, virtual text, and semantic tokens
 - **Telescope**: Custom colors for pickers and titles
 - **Snacks.nvim**: Dashboard, picker (fuzzy finder), notifier, and indent guides - panels match editor background
+- **Lualine**: Custom statusline theme with mode-specific colors
 - **nvim-cmp**: Completion menu styling
 - **nvim-tree / neo-tree**: File explorer highlighting
 - **GitSigns**: Git change indicators
@@ -178,6 +180,38 @@ This theme includes custom highlighting for:
 - **Leap / Flash**: Motion plugin support
 - **Render Markdown**: Enhanced markdown rendering
 - **And more!**
+
+### Lualine Configuration
+
+To use the Embark theme with Lualine:
+
+```lua
+{
+  'nvim-lualine/lualine.nvim',
+  opts = {
+    options = {
+      theme = require("embark.lualine").theme(),
+    }
+  }
+}
+```
+
+Or with vanilla Neovim setup:
+
+```lua
+require("lualine").setup({
+  options = {
+    theme = require("embark.lualine").theme(),
+  }
+})
+```
+
+The theme provides mode-specific colors:
+- **Normal**: Green mode indicator
+- **Insert**: Blue mode indicator
+- **Visual**: Purple mode indicator
+- **Replace**: Red mode indicator
+- **Command**: Yellow mode indicator
 
 ## Requirements
 
