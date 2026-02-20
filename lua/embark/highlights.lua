@@ -4,6 +4,8 @@ local M = {}
 function M.setup(c, config)
 	local transparent = config.transparent_background
 	local italics = config.terminal_italics
+	local dimmed = config.dimmed
+	local normal_fg = dimmed and c.astral0 or c.astral1
 
 	local highlights = {
 		-- UI CHROME
@@ -29,8 +31,8 @@ function M.setup(c, config)
 		ModeMsg = { fg = c.astral0, bold = true },
 		MoreMsg = { link = "ModeMsg" },
 		NonText = { fg = c.space4 },
-		Normal = { bg = transparent and c.none or c.space1, fg = c.astral1 },
-		NormalFloat = { bg = c.space2, fg = c.astral1 },
+		Normal = { bg = transparent and c.none or c.space1, fg = normal_fg },
+		NormalFloat = { bg = c.space2, fg = normal_fg },
 		Pmenu = { fg = c.astral1, bg = c.space2 },
 		PmenuSel = { fg = c.purple, bg = c.space1 },
 		PmenuSbar = { fg = c.astral1, bg = c.space0 },

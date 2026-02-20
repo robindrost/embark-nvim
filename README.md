@@ -49,6 +49,7 @@ Written in pure Lua for modern Neovim with transparent background support.
       transparent_background = false,  -- Set to true for transparent background
       terminal_italics = true,         -- Enable italics for comments
       terminal_colors = true,          -- Set terminal colors
+      dimmed = false,                  -- Set to true for dimmed text colors
     })
     vim.cmd("colorscheme embark")
   end,
@@ -66,6 +67,7 @@ use {
       transparent_background = false,
       terminal_italics = true,
       terminal_colors = true,
+      dimmed = false,
     })
     vim.cmd("colorscheme embark")
   end
@@ -102,6 +104,7 @@ EOF
      transparent_background = false,
      terminal_italics = true,
      terminal_colors = true,
+     dimmed = false,
    })
    vim.cmd("colorscheme embark")
    ```
@@ -115,6 +118,7 @@ require("embark").setup({
   transparent_background = false,  -- Enable transparent background
   terminal_italics = true,         -- Enable italic comments (requires font support)
   terminal_colors = true,          -- Set terminal colors
+  dimmed = false,                  -- Use dimmed (more subtle) text colors
 })
 ```
 
@@ -139,6 +143,19 @@ require("embark").setup({
 })
 vim.cmd("colorscheme embark")
 ```
+
+### Dimmed Variant
+
+For a softer, more muted text appearance, enable the dimmed variant:
+
+```lua
+require("embark").setup({
+  dimmed = true,
+})
+vim.cmd("colorscheme embark")
+```
+
+This uses a more subtle gray for the default text color while keeping syntax highlighting vibrant.
 
 ## Color Palette
 

@@ -9,6 +9,7 @@ M.config = {
   transparent_background = false,
   terminal_italics = true,
   terminal_colors = true,
+  dimmed = false,
 }
 
 -- Setup function to configure the theme
